@@ -3,7 +3,7 @@ import '../utils/constants.dart';
 
 class GameButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? width;
   final double? height;
   final Widget? child;
@@ -12,7 +12,7 @@ class GameButton extends StatelessWidget {
   const GameButton({
     super.key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.width = 300,
     this.height = 65,
     this.child,
@@ -26,7 +26,7 @@ class GameButton extends StatelessWidget {
       height: height,
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: onPressed == null ? Colors.grey.shade300 : AppColors.primary,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: Colors.black,
