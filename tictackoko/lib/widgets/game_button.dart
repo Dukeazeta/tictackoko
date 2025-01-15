@@ -43,6 +43,8 @@ class GameButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          splashFactory: NoSplash.splashFactory,
+          highlightColor: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
           onTap: onPressed,
           child: Center(

@@ -163,7 +163,8 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     });
   }
 
-  Widget _buildPlayerScore(String player, int score, Color color, bool isActive) {
+  Widget _buildPlayerScore(
+      String player, int score, Color color, bool isActive) {
     return Container(
       width: 120,
       height: 120,
@@ -303,6 +304,8 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                       textStyle: const TextStyle(
                         fontSize: 64,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'ClashGrotesk',
+                        color: Colors.black,
                       ),
                     );
                   },
