@@ -4,18 +4,24 @@ import '../utils/constants.dart';
 class GameButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final double? width;
+  final double? height;
+  final Widget? child;
 
   const GameButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.width = 300,
+    this.height = 65,
+    this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 65,
+      width: width,
+      height: height,
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: Colors.green,
@@ -38,13 +44,13 @@ class GameButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           onTap: onPressed,
           child: Center(
-            child: Text(
+            child: child ?? Text(
               text,
               style: const TextStyle(
-                fontFamily: 'ClashGrotesk',
-                color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'ClashGrotesk',
+                color: Colors.black,
               ),
             ),
           ),

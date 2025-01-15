@@ -8,71 +8,100 @@ import '../widgets/game_button.dart';
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
+  String getDifficultyText(AIDifficulty difficulty) {
+    switch (difficulty) {
+      case AIDifficulty.easy:
+        return 'AI Level: Easy';
+      case AIDifficulty.medium:
+        return 'AI Level: Medium';
+      case AIDifficulty.hard:
+        return 'AI Level: Hard';
+    }
+  }
+
+  AIDifficulty getNextDifficulty(AIDifficulty current) {
+    switch (current) {
+      case AIDifficulty.easy:
+        return AIDifficulty.medium;
+      case AIDifficulty.medium:
+        return AIDifficulty.hard;
+      case AIDifficulty.hard:
+        return AIDifficulty.easy;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsNotifierProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GameButton(
+                    text: '',
+                    width: 50,
+                    height: 50,
+                    child: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Settings',
+                'SETTINGS',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                  fontFamily: 'ClashGrotesk',
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 2,
                 ),
               ),
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    GameButton(
-                      text: settings.isDarkMode ? 'Dark Mode' : 'Light Mode',
-                      onPressed: () => ref.read(settingsNotifierProvider.notifier).toggleTheme(),
-                    ),
-                    const SizedBox(height: 16),
-                    GameButton(
-                      text: 'AI: Easy',
-                      onPressed: () => ref.read(settingsNotifierProvider.notifier)
-                          .setAIDifficulty(AIDifficulty.easy),
-                    ),
-                    const SizedBox(height: 16),
-                    GameButton(
-                      text: 'AI: Medium',
-                      onPressed: () => ref.read(settingsNotifierProvider.notifier)
-                          .setAIDifficulty(AIDifficulty.medium),
-                    ),
-                    const SizedBox(height: 16),
-                    GameButton(
-                      text: 'AI: Hard',
-                      onPressed: () => ref.read(settingsNotifierProvider.notifier)
-                          .setAIDifficulty(AIDifficulty.hard),
-                    ),
-                    const SizedBox(height: 16),
-                    GameButton(
-                      text: 'Source Code',
-                      onPressed: () async {
-                        final url = Uri.parse('https://github.com/yourusername/tictackoko');
-                        if (await canLaunchUrl(url)) {
-                          await launchUrl(url);
-                        }
-                      },
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      GameButton(
+                        text: settings.isDarkMode ? 'Dark Mode' : 'Light Mode',
+                        onPressed: () => ref
+                            .read(settingsNotifierProvider.notifier)
+                            .toggleTheme(),
+                      ),
+                      const SizedBox(height: 16),
+                      GameButton(
+                        text: getDifficultyText(settings.aiDifficulty),
+                        onPressed: () => ref
+                            .read(settingsNotifierProvider.notifier)
+                            .setAIDifficulty(
+                                getNextDifficulty(settings.aiDifficulty)),
+                      ),
+                      const SizedBox(height: 16),
+                      GameButton(
+                        text: 'Source Code',
+                        onPressed: () async {
+                          final url = Uri.parse(
+                              'https://github.com/yourusername/tictackoko');
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
