@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/game_button.dart';
 import '../utils/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/settings_provider.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,7 +44,12 @@ class HomeScreen extends StatelessWidget {
                     GameButton(
                       text: 'Settings',
                       onPressed: () {
-                        // TODO: Navigate to settings screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsScreen(),
+                          ),
+                        );
                       },
                     ),
                   ],
