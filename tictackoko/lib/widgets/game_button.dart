@@ -7,6 +7,7 @@ class GameButton extends StatelessWidget {
   final double? width;
   final double? height;
   final Widget? child;
+  final TextStyle? textStyle;
 
   const GameButton({
     super.key,
@@ -15,6 +16,7 @@ class GameButton extends StatelessWidget {
     this.width = 300,
     this.height = 65,
     this.child,
+    this.textStyle,
   });
 
   @override
@@ -46,7 +48,7 @@ class GameButton extends StatelessWidget {
           child: Center(
             child: child ?? Text(
               text,
-              style: const TextStyle(
+              style: textStyle ?? const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'ClashGrotesk',

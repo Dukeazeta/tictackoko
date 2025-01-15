@@ -4,6 +4,7 @@ import '../utils/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/settings_provider.dart';
 import 'settings_screen.dart';
+import 'game_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,23 +23,32 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     GameButton(
                       text: 'VS AI',
-                      onPressed: () {
-                        // TODO: Navigate to AI game screen
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(isVsAI: true),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     GameButton(
                       text: '2 Players',
-                      onPressed: () {
-                        // TODO: Navigate to 2 players game screen
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(isVsAI: false),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     GameButton(
                       text: 'WiFi Multiplayer',
-                      onPressed: () {
-                        // TODO: Navigate to WiFi multiplayer screen
-                      },
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(isVsAI: false),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     GameButton(
