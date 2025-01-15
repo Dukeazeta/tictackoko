@@ -71,7 +71,7 @@ class WifiGameScreen extends ConsumerWidget {
                     width: 50,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.primary,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: Colors.black,
@@ -93,7 +93,7 @@ class WifiGameScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         onTap: () => Navigator.pop(context),
                         child: const Center(
-                          child: Icon(Icons.arrow_back, color: Colors.black),
+                          child: Icon(Icons.arrow_back, color: Colors.white),
                         ),
                       ),
                     ),
