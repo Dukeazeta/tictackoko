@@ -6,6 +6,7 @@ import '../providers/settings_provider.dart';
 import 'settings_screen.dart';
 import 'game_screen.dart';
 import 'two_player_screen.dart';
+import 'wifi_connection_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -53,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const GameScreen(isVsAI: false),
+                          builder: (context) => const WifiConnectionScreen(),
                         ),
                       ),
                     ),
