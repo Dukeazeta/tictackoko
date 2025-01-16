@@ -41,20 +41,24 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   }
 
   void _makeAIMove() {
-    final settings = ref.read(settingsNotifierProvider);
-    int bestMove;
-
-    switch (settings.aiDifficulty) {
-      case AIDifficulty.easy:
-        bestMove = _getRandomMove();
-      case AIDifficulty.medium:
-        bestMove = _getMediumMove();
-      case AIDifficulty.hard:
-        bestMove = _getBestMove();
-    }
-
-    Future.delayed(
-        const Duration(milliseconds: 500), () => _makeMove(bestMove));
+    final settingsAsync = ref.read(settingsNotifierProvider);
+    
+    settingsAsync.whenData((settings) {
+      int bestMove;
+      switch (settings.aiDifficulty) {
+        case AIDifficulty.easy:
+          bestMove = _getRandomMove();
+          break;
+        case AIDifficulty.medium:
+          bestMove = _getMediumMove();
+          break;
+        case AIDifficulty.hard:
+          bestMove = _getBestMove();
+          break;
+      }
+      Future.delayed(
+          const Duration(milliseconds: 500), () => _makeMove(bestMove));
+    });
   }
 
   int _getRandomMove() {

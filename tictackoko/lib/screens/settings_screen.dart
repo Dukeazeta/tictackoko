@@ -32,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsNotifierProvider);
+    final settingsAsync = ref.watch(settingsNotifierProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -68,40 +68,48 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      GameButton(
-                        text: settings.isDarkMode ? 'Dark Mode' : 'Light Mode',
-                        onPressed: () => ref
-                            .read(settingsNotifierProvider.notifier)
-                            .toggleTheme(),
-                      ),
-                      const SizedBox(height: 16),
-                      GameButton(
-                        text: getDifficultyText(settings.aiDifficulty),
-                        onPressed: () => ref
-                            .read(settingsNotifierProvider.notifier)
-                            .setAIDifficulty(
-                                getNextDifficulty(settings.aiDifficulty)),
-                      ),
-                      const SizedBox(height: 16),
-                      GameButton(
-                        text: 'Source Code',
-                        onPressed: () async {
-                          final url = Uri.parse(
-                              'https://github.com/yourusername/tictackoko');
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(url);
-                          }
-                        },
-                      ),
-                    ],
+              child: settingsAsync.when(
+                data: (settings) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        GameButton(
+                          text: settings.isDarkMode ? 'Dark Mode' : 'Light Mode',
+                          onPressed: () => ref
+                              .read(settingsNotifierProvider.notifier)
+                              .toggleTheme(),
+                        ),
+                        const SizedBox(height: 16),
+                        GameButton(
+                          text: getDifficultyText(settings.aiDifficulty),
+                          onPressed: () => ref
+                              .read(settingsNotifierProvider.notifier)
+                              .setAIDifficulty(
+                                  getNextDifficulty(settings.aiDifficulty)),
+                        ),
+                        const SizedBox(height: 16),
+                        GameButton(
+                          text: 'Source Code',
+                          onPressed: () async {
+                            final url = Uri.parse(
+                                'https://github.com/Dukeazeta/tictackoko');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
+                ),
+                loading: () => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: (error, stack) => Center(
+                  child: Text('Error: $error'),
                 ),
               ),
             ),
